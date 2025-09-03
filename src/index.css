@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* ---------- Theme tokens ---------- */
+@layer theme {
+  :root {
+    --bg: #f2f2f2;              /* light lavender background */
+    --card: #ffffff;
+    --ink: #090329;
+    --subtle: #6b6f80;
+    --brand: #6a4cff;           /* primary purple */
+    --info-border: #674FE3;
+    --brand-100: #ece7ff;
+    --accent: #c7f5e8;          /* mint for “valid” card */
+    --accent-ink: #173c36;
+    --ring: rgba(106,76,255,0.35);
+    --info-bg: #eae7fc;
+    --valid-bg: #c7f6e4;
+    --valid-border: #26563e;
+    --verify-bg: #6d51f1;
+    --esc-border: #6850e4;
+    --font-color: #090329;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "Soin Sans Neue";
+    src: url("/fonts/Soin_Sans_Neue/SoinSansNeue-Roman.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Soin Sans Neue";
+    src: url("/fonts/Soin_Sans_Neue/SoinSansNeue-Bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Soin Sans Neue";
+    src: url("/fonts/Soin_Sans_Neue/SoinSansNeue-LightItalic.otf") format("opentype");
+    font-weight: 400;
+    font-style: italic;
+  }
+
+
+  body {
+    font-family: "Soin Sans Neue", ui-sans-serif, system-ui, sans-serif;
+  }
+  /* Add more weights/styles if you want */
+}
+
+
+/* ---------- Components ---------- */
+@layer components {
+  .sikt-app {
+    @apply min-h-screen items-center justify-center p-6;
+    background: radial-gradient(1200px 600px at 50% -200px, var(--bg), #f8f9fb 60%);
+    color: var(--ink);
+  }
+
+  .sikt-header {
+    @apply w-full max-w-md flex items-center justify-between px-8 py-4 rounded-t-2xl;
+    background: var(--info-bg); /* soft lavender like the screenshot */
+    border-bottom: 2.5px solid var(--info-border);
+  }
+
+  .sikt-header .logo {
+    @apply h-6; /* adjust if too small */
+    object-fit: contain;
+  }
+
+  .sikt-header .menu {
+    @apply h-5 cursor-pointer;
+    object-fit: contain;
+  }
+
+
+    /* Perfect vertical centering vs 20px icon */
+  .sikt-row {
+    /* 20px line height to match w-5 h-5 icon */
+    @apply flex items-center gap-2 text-sm py-1.5;
+    --row-size: 20px;         /* icon is w-5/h-5 */
+    --align-nudge: 1px;       /* optical tweak; adjust 0–1px if needed */
+  }
+
+  .sikt-row .icon {
+    width: var(--row-size);
+    height: var(--row-size);
+    display: block;           /* no extra inline spacing */
+    flex-shrink: 0;
+  }
+
+  .sikt-key,
+  .sikt-val {
+    line-height: var(--row-size);
+    position: relative;
+    top: var(--align-nudge);  /* nudges text down slightly for optical center */
+  }
+
+  .sikt-key {
+    @apply font-semibold text-slate-800;
+  }
+
+
+
+
+  .sikt-card {
+    @apply w-full max-w-md rounded-2xl;
+  }
+
+  .sikt-avatar {
+    @apply mx-auto mb-4 relative items-center justify-center w-30 h-30 rounded-full overflow-hidden;
+    background: #e6e8ef;
+  }
+
+  .sikt-info {
+    @apply p-5 mt-3 rounded-xl;
+    border: 2.5px solid var(--info-border);
+    background: var(--info-bg);
+  }
+  .sikt-info h2 { @apply text-lg font-semibold mb-2; }
+
+  .sikt-valid {
+    @apply p-6 mt-8 text-center rounded-xl;
+    background: var(--valid-bg);
+    color: var(--ink);
+    border: 2.5px solid var(--valid-border);
+  }
+  .sikt-valid .title { @apply text-2xl; }
+  .sikt-valid .sub { @apply text-sm mt-1 opacity-90; }
+  .sikt-valid .expires { @apply text-sm mt-1 font-semibold; }
+
+  .btn-primary {
+    @apply w-full py-3 mt-8 rounded-full text-xl font-medium text-white text-center shadow-md;
+    background: var(--verify-bg);
+  }
+  .btn-primary:hover { background: var(--info-border); }
+
+  .btn-outline {
+    @apply w-full py-3 mt-4 flex rounded-full text-xl font-medium text-center;
+    background: #fff;
+    color: var(--ink);
+    border: 2.5px solid var(--verify-bg);
+
+    .icon {
+      @apply w-6 h-6;
+    }
+  }
+
+  .sikt-meta {
+    @apply mt-8 text-sm text-center flex flex-col;
+  }
+
+  @keyframes valid-flash {
+    0%, 100% {
+      background: var(--valid-bg);
+      color: var(--ink);
+    }
+    50% {
+      background: var(--valid-border); /* invert to border color */
+      color: #fff;                     /* text to white */
+    }
+  }
+
+  .flash-valid {
+    animation: valid-flash 0.8s ease-in-out 3;
+  }
+
+  /* Optional a11y: respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .flash-valid { animation: none; }
+  }
+
+}
