@@ -94,7 +94,7 @@
 
   .sikt-key,
   .sikt-val {
-    line-height: var(--row-size);
+    @apply text-xs;
     position: relative;
     top: var(--align-nudge);  /* nudges text down slightly for optical center */
   }
@@ -111,19 +111,19 @@
   }
 
   .sikt-avatar {
-    @apply mx-auto relative mt-2 mb-6 items-center justify-center w-30 h-30 rounded-full overflow-hidden;
+    @apply mx-auto relative mt-1 mb-5 items-center justify-center w-25 h-25 rounded-full overflow-hidden;
     background: #e6e8ef;
   }
 
   .sikt-info {
-    @apply p-4 rounded-xl;
+    @apply py-4 px-5 rounded-xl;
     border: 2.5px solid var(--info-border);
     background: var(--info-bg);
   }
   .sikt-info h2 { @apply text-lg font-semibold mb-2; }
 
   .sikt-valid {
-    @apply p-4 mt-6 text-center rounded-xl;
+    @apply p-3 mt-5 text-center rounded-xl;
     background: var(--valid-bg);
     color: var(--ink);
     border: 2.5px solid var(--valid-border);
@@ -133,13 +133,13 @@
   .sikt-valid .expires { @apply text-sm mt-1 font-semibold; }
 
   .btn-primary {
-    @apply w-full py-3 mt-6 rounded-full text-xl font-medium text-white text-center shadow-md;
+    @apply w-full py-2 mt-5 rounded-full text-xl font-medium text-white text-center shadow-md;
     background: var(--verify-bg);
   }
   .btn-primary:hover { background: var(--info-border); }
 
   .btn-outline {
-    @apply w-full py-3 mt-4 flex rounded-full text-xl font-medium text-center;
+    @apply w-full py-2 mt-3 flex rounded-full text-xl font-medium text-center justify-center items-center;
     background: #fff;
     color: var(--ink);
     border: 2.5px solid var(--verify-bg);

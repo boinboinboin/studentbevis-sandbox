@@ -151,7 +151,7 @@ export default function App() {
           <img src="/qr-code.svg" alt="QR Code" className="icon" />
         </button>
 
-        <div className="sikt-meta gap-4">
+        <div className="sikt-meta gap-1">
           <div className="row">
             <span className="font-bold">Last updated: </span><span>{formattedDate(now)} at {formattedTime} (CEST)</span><br />
           </div>
