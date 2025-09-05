@@ -55,13 +55,13 @@
 /* ---------- Components ---------- */
 @layer components {
   .sikt-app {
-    @apply min-h-screen items-center justify-center p-6;
+    @apply min-h-screen items-center justify-center p-4;
     background: radial-gradient(1200px 600px at 50% -200px, var(--bg), #f8f9fb 60%);
     color: var(--ink);
   }
 
   .sikt-header {
-    @apply w-full max-w-md flex items-center justify-between px-8 py-4;
+    @apply w-full max-w-md flex items-center justify-between pl-6 pr-8 py-4;
     background: var(--info-bg); /* soft lavender like the screenshot */
     border-bottom: 2.5px solid var(--info-border);
   }
@@ -80,8 +80,8 @@
     /* Perfect vertical centering vs 20px icon */
   .sikt-row {
     /* 20px line height to match w-5 h-5 icon */
-    @apply flex items-center gap-2 text-sm py-1.5;
-    --row-size: 20px;         /* icon is w-5/h-5 */
+    @apply flex items-center gap-2 text-sm py-1;
+    --row-size: 24px;         /* icon is w-5/h-5 */
     --align-nudge: 1px;       /* optical tweak; adjust 0–1px if needed */
   }
 
@@ -111,19 +111,19 @@
   }
 
   .sikt-avatar {
-    @apply mx-auto mb-4 relative items-center justify-center w-30 h-30 rounded-full overflow-hidden;
+    @apply mx-auto relative mt-2 mb-6 items-center justify-center w-30 h-30 rounded-full overflow-hidden;
     background: #e6e8ef;
   }
 
   .sikt-info {
-    @apply p-5 mt-3 rounded-xl;
+    @apply p-4 rounded-xl;
     border: 2.5px solid var(--info-border);
     background: var(--info-bg);
   }
   .sikt-info h2 { @apply text-lg font-semibold mb-2; }
 
   .sikt-valid {
-    @apply p-6 mt-8 text-center rounded-xl;
+    @apply p-4 mt-6 text-center rounded-xl;
     background: var(--valid-bg);
     color: var(--ink);
     border: 2.5px solid var(--valid-border);
@@ -133,7 +133,7 @@
   .sikt-valid .expires { @apply text-sm mt-1 font-semibold; }
 
   .btn-primary {
-    @apply w-full py-3 mt-8 rounded-full text-xl font-medium text-white text-center shadow-md;
+    @apply w-full py-3 mt-6 rounded-full text-xl font-medium text-white text-center shadow-md;
     background: var(--verify-bg);
   }
   .btn-primary:hover { background: var(--info-border); }
@@ -150,7 +150,7 @@
   }
 
   .sikt-meta {
-    @apply mt-8 text-sm text-center flex flex-col;
+    @apply mt-4 text-sm text-center flex flex-col;
   }
 
   @keyframes valid-flash {

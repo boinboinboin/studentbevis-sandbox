@@ -108,7 +108,7 @@ export default function App() {
           onChange={onFileChange}
         />
 
-        <div className="sikt-info mt-8">
+        <div className="sikt-info">
           <p className="text-2xl">Boyan Yu ({calculateAge(birthDate)})</p>
 
           <div className="sikt-row">
@@ -127,7 +127,7 @@ export default function App() {
             <img src="/graduation-cap.svg" alt="" className="icon" />
             <span className="sikt-key">Institution:</span>
             <span className="sikt-val">
-              Norges teknisk-naturvitenskapelige universitet - NTNU
+              NTNU – Norwegian University of Science and Technology
             </span>
           </div>
         </div>
