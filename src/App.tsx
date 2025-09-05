@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export default function App() {
-  const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+  const DEFAULT_AVATAR = "/pp.jpg"; // served from public/
+  const [avatarSrc, setAvatarSrc] = useState<string>(DEFAULT_AVATAR);
   const [now, setNow] = useState<Date>(new Date());
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,7 +36,7 @@ export default function App() {
     }
   };
 
-  const clearPhoto = () => setAvatarSrc(null);
+  // const clearPhoto = () => setAvatarSrc(null);
 
   const [flashing, setFlashing] = useState(false);
 
@@ -51,10 +52,6 @@ export default function App() {
     minute: "2-digit",
     hour12: false,
   }).format(now);
-
-  // const formattedDate = `${now.getDate().toString().padStart(2, "0")}.${(now.getMonth() + 1)
-  // .toString()
-  // .padStart(2, "0")}.${now.getFullYear()}`;
 
   const formattedDate = (date: Date): string => {
     return `${date.getDate().toString().padStart(2, "0")}.${(date.getMonth() + 1)
@@ -148,6 +145,7 @@ export default function App() {
         </div>
 
         <button className="btn-primary" onClick={handleVerify}>Verify</button>
+
         <button className="btn-outline text-center justify-center">
           <span className="mr-3">European Student Card</span>
           <img src="/qr-code.svg" alt="QR Code" className="icon" />

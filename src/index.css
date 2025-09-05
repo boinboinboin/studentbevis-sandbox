@@ -61,7 +61,7 @@
   }
 
   .sikt-header {
-    @apply w-full max-w-md flex items-center justify-between px-8 py-4 rounded-t-2xl;
+    @apply w-full max-w-md flex items-center justify-between px-8 py-4;
     background: var(--info-bg); /* soft lavender like the screenshot */
     border-bottom: 2.5px solid var(--info-border);
   }
