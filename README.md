@@ -67,3 +67,9 @@ export default tseslint.config([
   },
 ])
 ```
+
+Run pnpm build
+
+Run npx cap sync android
+
+Open Android Studio via pnpm open:android (or npx cap open android) and build the APK/AAB there.
