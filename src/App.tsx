@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { differenceInYears, format } from "date-fns";
 
 export default function App() {
   const DEFAULT_AVATAR = "/pp.jpg"; // served from public/
@@ -21,7 +22,9 @@ export default function App() {
     return () => clearInterval(id);
   }, []);
 
-  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
+  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (
+    e,
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
@@ -36,134 +39,138 @@ export default function App() {
     }
   };
 
-  // const clearPhoto = () => setAvatarSrc(null);
-
   const [flashing, setFlashing] = useState(false);
 
   const handleVerify = () => {
-    // Retrigger animation even if already active
     setFlashing(false);
     requestAnimationFrame(() => setFlashing(true));
   };
 
-
-  const formattedTime = new Intl.DateTimeFormat(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: false,
-  }).format(now);
-
-  const formattedDate = (date: Date): string => {
-    return `${date.getDate().toString().padStart(2, "0")}.${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}.${date.getFullYear()}`;
-  };
-
-  const calculateAge = (birthDate: Date): number => {
-    const ageDiff = now.getTime() - birthDate.getTime();
-    const ageDate = new Date(ageDiff);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-  };
+  const formattedTime = format(now, "HH:mm");
+  const formattedDate = (date: Date): string => format(date, "dd.MM.yyyy");
+  const calculateAge = (birthDate: Date): number =>
+    differenceInYears(now, birthDate);
 
   const birthDate = new Date(2001, 8, 20); // September 20, 2001
 
+  const getSeason = (date: Date): string => {
+    const month = date.getMonth();
+    if (month >= 7 && month <= 11) return "Autumn " + date.getFullYear();
+    return "Spring " + date.getFullYear();
+  };
+
+  const getExpirationDate = (date: Date): string => {
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    if (month >= 7 && month <= 11) return `31.01.${year + 1}`;
+    return `31.07.${year}`;
+  };
+
   return (
     <>
-    <header className="sikt-header">
+      <header className="sikt-header">
         <img src="/sikt-logo.png" alt="Sikt logo" className="logo" />
         <img src="/three-dots.png" alt="Menu" className="menu" />
       </header>
-    <div className="sikt-app">
-      
-
-      <div className="sikt-card">
-        {/* Avatar */}
-        <div
-          className="sikt-avatar cursor-pointer"
-          role="button"
-          tabIndex={0}
-          aria-label={avatarSrc ? "Change profile photo" : "Add profile photo"}
-          onClick={() => fileInputRef.current?.click()}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              fileInputRef.current?.click();
+      <div className="sikt-app">
+        <div className="sikt-card">
+          <div
+            className="sikt-avatar cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-label={
+              avatarSrc ? "Change profile photo" : "Add profile photo"
             }
-          }}
-        >
-          {avatarSrc ? (
-            <img src={avatarSrc} alt="Profile" />
-          ) : (
-            <span className="fallback flex items-center justify-center text-3xl">👤</span>
-          )}
-          
-        </div>
-
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          capture="user"
-          className="hidden"
-          onChange={onFileChange}
-        />
-
-        <div className="sikt-info">
-          <p className="text-2xl">Boyan Yu ({calculateAge(birthDate)})</p>
-
-          <div className="sikt-row">
-            <img src="/calendar.svg" alt="" className="icon" />
-            <span className="sikt-key">Date of birth:</span>
-            <span className="sikt-val">{formattedDate(birthDate)}</span>
+            onClick={() => fileInputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                fileInputRef.current?.click();
+              }
+            }}
+          >
+            {avatarSrc ? (
+              <img src={avatarSrc} alt="Profile" />
+            ) : (
+              <span className="fallback flex items-center justify-center text-3xl">
+                👤
+              </span>
+            )}
           </div>
 
-          <div className="sikt-row">
-            <img src="/identity.svg" alt="" className="icon" />
-            <span className="sikt-key">Student number:</span>
-            <span className="sikt-val">546185</span>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            capture="user"
+            className="hidden"
+            onChange={onFileChange}
+          />
+
+          <div className="sikt-info">
+            <p className="text-2xl">Boyan Yu ({calculateAge(birthDate)})</p>
+
+            <div className="sikt-row">
+              <img src="/calendar.svg" alt="" className="icon" />
+              <span className="sikt-key">Date of birth:</span>
+              <span className="sikt-val">{formattedDate(birthDate)}</span>
+            </div>
+
+            <div className="sikt-row">
+              <img src="/identity.svg" alt="" className="icon" />
+              <span className="sikt-key">Student number:</span>
+              <span className="sikt-val">546185</span>
+            </div>
+
+            <div className="sikt-row">
+              <img src="/graduation-cap.svg" alt="" className="icon" />
+              <span className="sikt-key">Institution:</span>
+              <span className="sikt-val">
+                NTNU – Norwegian University of Science and Technology
+              </span>
+            </div>
           </div>
 
-          <div className="sikt-row">
-            <img src="/graduation-cap.svg" alt="" className="icon" />
-            <span className="sikt-key">Institution:</span>
-            <span className="sikt-val">
-              NTNU – Norwegian University of Science and Technology
+          <div
+            className={`sikt-valid text-center ${flashing ? "flash-valid" : ""}`}
+            onAnimationEnd={() => setFlashing(false)}
+          >
+            <div className="title">Valid student ID</div>
+            <div className="sub">{getSeason(now)}</div>
+            <span className="expires">Expires: </span>
+            <span className="expires-date text-sm">
+              {getExpirationDate(now)}
             </span>
           </div>
-        </div>
 
+          <button className="btn-primary" onClick={handleVerify}>
+            Verify
+          </button>
 
-        {/* Valid section (just demo, styled) */}
-        <div
-          className={`sikt-valid text-center ${flashing ? "flash-valid" : ""}`}
-          onAnimationEnd={() => setFlashing(false)}
-        >
-          <div className="title">Valid student ID</div>
-          <div className="sub">Autumn 2025</div>
-          <span className="expires">Expires: </span>
-          <span className="expires-date text-sm">31.01.2026</span>
-        </div>
+          <button className="btn-outline text-center justify-center">
+            <span className="mr-3">European Student Card</span>
+            <img src="/qr-code.svg" alt="QR Code" className="icon" />
+          </button>
 
-        <button className="btn-primary" onClick={handleVerify}>Verify</button>
-
-        <button className="btn-outline text-center justify-center">
-          <span className="mr-3">European Student Card</span>
-          <img src="/qr-code.svg" alt="QR Code" className="icon" />
-        </button>
-
-        <div className="sikt-meta gap-1">
-          <div className="row">
-            <span className="font-bold">Last updated: </span><span>{formattedDate(now)} at {formattedTime} (CEST)</span><br />
-          </div>
-          <div className="row">
-            <span className="font-bold">Timezone: </span><span>{Intl.DateTimeFormat().resolvedOptions().timeZone}</span> <br />
-          </div>
-          <div className="row">
-            <span className="font-bold">Version: 4.1.9</span>
+          <div className="sikt-meta gap-1">
+            <div className="row">
+              <span className="font-bold">Last updated: </span>
+              <span>
+                {formattedDate(now)} at {formattedTime} (CEST)
+              </span>
+              <br />
+            </div>
+            <div className="row">
+              <span className="font-bold">Timezone: </span>
+              <span>{Intl.DateTimeFormat().resolvedOptions().timeZone}</span>
+              <br />
+            </div>
+            <div className="row">
+              <span className="font-bold">Version: 4.1.9</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
