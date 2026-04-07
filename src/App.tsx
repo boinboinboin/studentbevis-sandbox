@@ -166,7 +166,7 @@ export default function App() {
               <br />
             </div>
             <div className="row">
-              <span className="font-bold">Version: 4.1.9</span>
+              <span className="font-bold">Version: 4.2.2</span>
             </div>
           </div>
         </div>
